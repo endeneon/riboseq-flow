@@ -11,4 +11,4 @@ nextflow self-update
 nextflow -version
 
 # Update welcome message
-echo "Welcome to the nextflow_in_action devcontainer!" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+echo "Welcome to the riboseq-flow devcontainer!" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt

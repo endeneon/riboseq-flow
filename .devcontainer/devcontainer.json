@@ -1,5 +1,5 @@
 {
-    "name": "nextflow-training-local",
+    "name": "riboseq-flow",
     "image": "ghcr.io/nextflow-io/training:2.1.4",
 
     "remoteUser": "root",
@@ -13,7 +13,7 @@
         "NXF_VER": "25.10.2"
     },
 
-    "onCreateCommand": "./.devcontainer/local/setup.sh",
+    "onCreateCommand": "./.devcontainer/setup.sh",
 
     "hostRequirements": {
         "cpus": 4,
