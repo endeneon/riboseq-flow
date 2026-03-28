@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [v1.2.2] - 2026-03-28
+### Added
+- Added .devcontainer for GitHub Codespaces support.
+
+---
+
 ## [v1.2.1] - 2025-12-15
 ### Fixed
 - Added `first()` to ensure the GTF channel can be reused for multiple samples for gene-level quantification with featureCounts (closes #89).
