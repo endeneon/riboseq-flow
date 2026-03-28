@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
+# Fix for Java options
+printf 'unset JAVA_TOOL_OPTIONS\n' >> $HOME/.bashrc
+unset JAVA_TOOL_OPTIONS
+
 # Customise the terminal command prompt
-echo "export PROMPT_DIRTRIM=2" >> $HOME/.bashrc
-echo "export PS1='\[\e[3;36m\]\w ->\[\e[0m\\] '" >> $HOME/.bashrc
-export PROMPT_DIRTRIM=2
-export PS1='\[\e[3;36m\]\w ->\[\e[0m\\] '
+printf "export PS1='\\[\\e[3;36m\\]\${PWD#/workspaces/} ->\\[\\e[0m\\] '\n" >> $HOME/.bashrc
+export PS1='\[\e[3;36m\]${PWD#/workspaces/} ->\[\e[0m\] '
 
 # Update Nextflow
 nextflow self-update
 nextflow -version
 
-# Update welcome message
-echo "Welcome to the riboseq-flow devcontainer!" > /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+cat /usr/local/etc/vscode-dev-containers/first-run-notice.txt

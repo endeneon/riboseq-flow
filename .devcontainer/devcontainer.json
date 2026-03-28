@@ -1,23 +1,32 @@
+//
+// MAIN PRODUCTION DEVCONTAINER CONFIG
+// Uses image that is pre-built and pushed to GitHub
+// See .github/.devcontainer/devcontainer.json for build
+//
 {
     "name": "riboseq-flow",
     "image": "ghcr.io/nextflow-io/training:2.1.4",
-
+    "workspaceFolder": "/workspaces/riboseq-flow",
     "remoteUser": "root",
-    "privileged": true,
-
-    "workspaceMount": "source=${localWorkspaceFolder},target=${localWorkspaceFolder},type=bind,consistency=cached",
-    "workspaceFolder": "${localWorkspaceFolder}",
-
     "remoteEnv": {
-        "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-        "NXF_VER": "25.10.2"
+        // Nextflow installation version
+        "NXF_HOME": "/workspaces/.nextflow",
+        "NXF_EDGE": "0",
+        "NXF_VER": "25.10.2",
+        // Other env vars
+        "HOST_PROJECT_PATH": "/workspaces/riboseq-flow",
+        "SHELL": "/bin/bash" // Ush bash
     },
-
-    "onCreateCommand": "./.devcontainer/setup.sh",
-
-    "hostRequirements": {
-        "cpus": 4,
-        "memory": "8gb",
-        "storage": "16gb"
+    "onCreateCommand": "bash .devcontainer/setup.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": ["nf-core.nf-core-extensionpack"],
+            // Use Python from conda
+            "settings": {
+                "python.defaultInterpreterPath": "/opt/conda/bin/python"
+            },
+            // Use bash
+            "terminal.integrated.defaultProfile.linux": "bash"
+        }
     }
 }
