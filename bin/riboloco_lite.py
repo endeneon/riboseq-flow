@@ -206,9 +206,9 @@ def main():
                     footprint_frame = (footprint_start - annotated_start) % 3
 
                     if footprint[0] == tx_fasta_d[tx][footprint_start]:
-                        mismatch = 'MM'
-                    else:
                         mismatch = 'm'
+                    else:
+                        mismatch = 'MM'
 
                     estimated_A_site = footprint_start + footprint_length - 12
                     # estimated_A_site = footprint_start + footprint_length - 12 - (footprint_length - 28)/2
