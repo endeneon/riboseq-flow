@@ -203,7 +203,7 @@ def main():
 
                     footprint = str(record.query_sequence)
                     footprint_start = record.reference_start      # 0-based, for Python/FASTA indexing
-                    footprint_start_1based = footprint_start + 1. # 1-based, for transcript-info coordinates
+                    footprint_start_1based = footprint_start + 1  # 1-based, for transcript-info coordinates
                     footprint_length = len(footprint)
                     tx_info = info_dict[tx]
                     annotated_start = int(tx_info[3])
@@ -273,6 +273,5 @@ def main():
 
 
 main()
-
 
 
