@@ -202,11 +202,12 @@ def main():
                         continue
 
                     footprint = str(record.query_sequence)
-                    footprint_start = record.reference_start
+                    footprint_start = record.reference_start      # 0-based, for Python/FASTA indexing
+                    footprint_start_1based = footprint_start + 1. # 1-based, for transcript-info coordinates
                     footprint_length = len(footprint)
                     tx_info = info_dict[tx]
                     annotated_start = int(tx_info[3])
-                    footprint_frame = (footprint_start - annotated_start) % 3
+                    footprint_frame = (footprint_start_1based - annotated_start) % 3
 
                     # Assumes end-to-end alignments; soft clipping would offset query_sequence[0].
                     if footprint[0] == tx_fasta_d[tx][footprint_start]:
@@ -214,7 +215,7 @@ def main():
                     else:
                         mismatch = 'MM'
 
-                    estimated_A_site = footprint_start + footprint_length - 12
+                    estimated_A_site = footprint_start_1based + footprint_length - 12
                     # estimated_A_site = footprint_start + footprint_length - 12 - (footprint_length - 28)/2
 
                     chunk_tx_list.append(tx)
@@ -272,7 +273,6 @@ def main():
 
 
 main()
-
 
 
 
