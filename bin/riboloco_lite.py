@@ -18,6 +18,9 @@ def find_all_orfs(tx_fasta_d, info_dict, max_tx=1_000_000):
     counter = 0
     df_list = []
     for tx_id, tx_seq in tx_fasta_d.items():
+        if tx_id not in info_dict:
+            continue
+
         cds_start = int(info_dict[tx_id][3])  # 1 based
         starts = [m.start() for m in re.finditer('ATG', tx_seq)]  # 0 based
         starts1 = [a + 1 for a in starts]
@@ -205,6 +208,7 @@ def main():
                     annotated_start = int(tx_info[3])
                     footprint_frame = (footprint_start - annotated_start) % 3
 
+                    # Assumes end-to-end alignments; soft clipping would offset query_sequence[0].
                     if footprint[0] == tx_fasta_d[tx][footprint_start]:
                         mismatch = 'm'
                     else:
@@ -268,7 +272,6 @@ def main():
 
 
 main()
-
 
 
 

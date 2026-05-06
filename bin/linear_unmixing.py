@@ -12,13 +12,14 @@ import argparse
 def convert_frame_of_dict(in_frame_dict, frame_shift):
     d = {}
     for key, value in in_frame_dict.items():
-        current_frame = int(key.split("_")[1])
+        key_parts = key.split("_")
+        current_frame = int(key_parts[1])
         new_frame = (current_frame + frame_shift) % 3
 
-        if 'm' in key or 'MM' in key:
-            new_key = key.split("_")[0] + "_" + str(new_frame) + "_" + key.split("_")[2]
+        if len(key_parts) == 3:
+            new_key = key_parts[0] + "_" + str(new_frame) + "_" + key_parts[2]
         else:
-            new_key = key.split("_")[0] + "_" + str(new_frame)
+            new_key = key_parts[0] + "_" + str(new_frame)
 
         d[new_key] = value
     return d
@@ -103,6 +104,9 @@ def main():
     )
 
     args = parser.parse_args()
+
+    if args.bootstrap_number <= 0:
+        parser.error("--bootstrap_number must be greater than 0")
 
     # Make all random operations reproducible
     np.random.seed(42)
