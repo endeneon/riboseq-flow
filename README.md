@@ -340,14 +340,14 @@ export NXF_SINGULARITY_CACHEDIR=/path/to/image/cache
 # change dir to your NXF_SINGULARITY_CACHEDIR path
 cd /path/to/image/cache
 
-singularity pull iraiosub-nf-riboseq-latest.img docker://iraiosub/nf-riboseq
-singularity pull iraiosub-mapping-length-latest.img docker://iraiosub/nf-riboseq-qc
-singularity pull iraiosub-nf-riboseq-dedup-latest.img docker://iraiosub/nf-riboseq-dedup
+singularity pull iraiosub-nf-riboseq-0c0c3386.img docker://iraiosub/nf-riboseq@sha256:0c0c33861d533653fb8fe6091f247e302d68c1e9b55ee5f5faf46979a9750a4b
+singularity pull iraiosub-nf-riboseq-qc-719e1879.img docker://iraiosub/nf-riboseq-qc@sha256:719e18799ff01b3071cb2187fcae78efaafe53faa604ca4a0bf224663f0cefba
+singularity pull iraiosub-nf-riboseq-dedup-45a6f6e9.img docker://iraiosub/nf-riboseq-dedup@sha256:45a6f6e9a16a4b082e5cb9f2ebad554c60d64f744831cc762444bfd233c82f0a
 ```
 
 ### Authors and contact
 
-riboseq-flow is written and maintained by Ira Iosub in Prof. Jernej Ule's lab at The Francis Crick Institute. It is based on a Snakemake pipeline in collaboration with its original author, Oscar Wilkins. 
+riboseq-flow is written and maintained by Ira Iosub in Prof. Jernej Ule's lab at The Francis Crick Institute. It is based on a Snakemake pipeline in collaboration with its original author, Oscar Wilkins.
 Contact email: `ira.iosub@crick.ac.uk`
 
 ### Citation policy
@@ -370,30 +370,18 @@ If you wish to make an addition or change to the pipeline, please follow these s
 2. Fork this repo.
 3. Create a new branch based on the `dev` branch, with a short, descriptive name e.g. `feat-colours` for making changes to a color palette.
 4. Modify the code exclusively on this new branch and mention the relavant issue in the commit messages.
-5. When your modifications are complete, submit a pull request to the `dev` branch describing the changes. 
+5. When your modifications are complete, submit a pull request to the `dev` branch describing the changes.
 6. Request a review from iraiosub on your pull request.
 7. The pull request will trigger a workflow execution on GitHub Actions for continuous integration (CI) of the pipeline.
-This is designed to automatically test riboseq-flow whenever a pull request is made to the main or dev branches of the repository.
-It ensures that the pipeline runs correctly in an Ubuntu environment, helping to catch any issues or errors early in the development process. 
+This is designed to automatically test riboseq-flow whenever a pull request is made to the `main` or `dev` branches of the repository.
+It ensures that the pipeline runs correctly in an Ubuntu environment, helping to catch any issues or errors early in the development process.
 
 ## Why use riboseq-flow
 
-- **User-friendly:** requires only minimal command-line experience.  
-- **Portable and reproducible:** runs identically across systems using Docker or Singularity.  
-- **Self-contained:** no manual dependency installation—each process runs in a container with the exact software it needs.  
-- **Reproducible results:** produces the same outputs regardless of platform, a cornerstone of computational reproducibility.  
-- **Scalable:** efficiently processes many samples in parallel for comparative studies.  
-- **Integrated QC:** combines data processing with extensive ribo-seq–specific QC.  
-- **Transparent:** tracks read counts at every step and provides custom QC reports for each sample.  
-- **Insightful:** visualises read fate and key metrics, helping users make informed downstream decisions.  
-- **Open and FAIR:** fully version-controlled, openly available, and compliant with FAIR principles.
-
-
-
-
-
-
-
-
-
-
+- **End-to-end ribo-seq analysis:** runs preprocessing, contaminant filtering, genome alignment, gene-level counting, P-site assignment, coverage track generation and ribo-seq-specific QC in a single workflow.
+- **Reproducible execution:** uses pinned software containers and version-controlled configuration to make analyses easier to rerun, review and share.
+- **Portable by design:** runs with Docker or Singularity across local workstations, servers and cluster environments.
+- **Scales to multi-sample studies:** uses Nextflow to parallelise independent samples and resume completed work when runs are interrupted.
+- **QC built into the workflow:** reports read fate, length distributions, frame periodicity, regional enrichment and other checks needed to assess ribo-seq data quality.
+- **Transparent outputs:** keeps intermediate logs, summary tables and MultiQC-compatible reports so downstream analyses can be traced back to each processing step.
+- **Open and citable:** maintained as an open, versioned workflow with a published citation for scientific reuse.
