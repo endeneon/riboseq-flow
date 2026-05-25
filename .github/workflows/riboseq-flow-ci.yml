@@ -10,7 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: |
+      - name: Install Nextflow 25.10.0
+        env:
+          NXF_VER: "25.10.0"
+        run: |
           wget -qO- get.nextflow.io | bash
           mv nextflow /usr/local/bin/
+          nextflow -version
       - run: nextflow run ${GITHUB_WORKSPACE}/main.nf -profile github,docker

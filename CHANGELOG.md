@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Fixed
 - Fixed `--skip_premap` runs so `--contaminants_fasta` is not required or checked when premapping is disabled.
 - Replaced non-idiomatic bitwise `&` with logical `&&` in the `RUST_QC` skip condition.
+- Pinned the GitHub Actions CI Nextflow version to `25.10.0`.
 
 ---
 ## [v1.2.2] - 2026-03-28
