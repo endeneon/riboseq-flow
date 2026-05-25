@@ -40,8 +40,7 @@ process UMITOOLS_DEDUPLICATE {
     tag "${sample_id}"
     label 'process_medium'
 
-    // conda 'bioconda::umi_tools=1.1.2 conda bioconda::samtools=1.16.1 bioconda::bedtools=2.30.0'
-    container 'iraiosub/nf-riboseq-dedup:latest'
+    container 'iraiosub/nf-riboseq-dedup@sha256:45a6f6e9a16a4b082e5cb9f2ebad554c60d64f744831cc762444bfd233c82f0a'
 
     publishDir "${params.outdir}/deduplicated", pattern: "*.dedup.sorted.bam", mode: 'copy', overwrite: true
     publishDir "${params.outdir}/deduplicated", pattern: "*.dedup.sorted.bam.bai", mode: 'copy', overwrite: true

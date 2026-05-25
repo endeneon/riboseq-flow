@@ -51,11 +51,13 @@ workflow PREPARE_RIBOSEQ_REFERENCE {
     // println "ch_genome_gtf class: ${ch_genome_gtf.getClass()}"
 
     ch_contaminants_fasta = Channel.empty()
-    if (!params.skip_premap && contaminants_fasta.toString().endsWith('.gz')) {
-        ch_contaminants_fasta = GUNZIP_CONTAMINANTS_FASTA ( [ [:], contaminants_fasta ] ).gunzip
-    } else {
-        // ch_contaminants_fasta = file(params.contaminants_fasta)
-        ch_contaminants_fasta = Channel.from( [ [ [:], contaminants_fasta ] ] )
+    if (!params.skip_premap) {
+        if (contaminants_fasta.toString().endsWith('.gz')) {
+            ch_contaminants_fasta = GUNZIP_CONTAMINANTS_FASTA ( [ [:], contaminants_fasta ] ).gunzip
+        } else {
+            // ch_contaminants_fasta = file(params.contaminants_fasta)
+            ch_contaminants_fasta = Channel.from( [ [ [:], contaminants_fasta ] ] )
+        }
     }
 
     // Prepare fasta index

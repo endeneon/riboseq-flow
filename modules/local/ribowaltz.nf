@@ -54,10 +54,9 @@ process GET_PSITE_TRACKS {
 
     label 'process_high'
 
-    container 'iraiosub/nf-riboseq:latest'
+    container 'iraiosub/nf-riboseq@sha256:0c0c33861d533653fb8fe6091f247e302d68c1e9b55ee5f5faf46979a9750a4b'
 
     publishDir "${params.outdir}/coverage_tracks/psite", pattern: "*.psites.bed.gz", mode: 'copy', overwrite: true
-    // publishDir "${params.outdir}/coverage_tracks/psite", pattern: "*.bigWig", mode: 'copy', overwrite: true
 
     input:
     path(psite_table)
@@ -82,7 +81,7 @@ process RUST_QC {
 
 label 'process_single'
 
-    container 'iraiosub/nf-riboseq-qc:latest'
+    container 'iraiosub/nf-riboseq-qc@sha256:719e18799ff01b3071cb2187fcae78efaafe53faa604ca4a0bf224663f0cefba'
 
     publishDir "${params.outdir}/riboseq_qc/rust_analysis/", pattern: "*.rust_analysis.pdf", mode: 'copy', overwrite: true
     

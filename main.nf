@@ -15,7 +15,6 @@ if (!params.input) {
             .fromPath( params.input )
             .splitCsv(header:true)
             .map { row -> [ row.sample, file(row.fastq, checkIfExists: true) ] }
-            // .view()
 }
 
 
@@ -47,13 +46,12 @@ if(params.org) {
 
 
 ch_genome_fasta = file(params.fasta, checkIfExists: true)
-ch_contaminants_fasta = file(params.contaminants_fasta, checkIfExists: true)
+ch_contaminants_fasta = params.skip_premap ? Channel.empty() : file(params.contaminants_fasta, checkIfExists: true)
 ch_genome_gtf = file(params.gtf, checkIfExists: true)
 
 /*
 MultiQC config
 */
-// ch_multiqc_config = Channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
 ch_multiqc_config = Channel.fromPath(params.multiqc_config, checkIfExists: true)
 
 /*
@@ -107,12 +105,6 @@ workflow RIBOSEQ {
         ch_genome_gtf,
         ch_contaminants_fasta
     )
-
-    // Test to asses channel type
-    // def test = PREPARE_RIBOSEQ_REFERENCE.out.genome_gtf
-    //                 .map { it[1] }
-
-    // println "genome_gtf_main class: ${test.getClass()}"
 
     // Extract UMIs and/or trim adapters and filter on min length, then run FASTQC
     PREPROCESS_READS(ch_input)
@@ -293,7 +285,7 @@ workflow RIBOSEQ {
             .map { [ it[1] ] }
             .collect() 
 
-        ch_merge_lemgth_filter = TRACK_READS.out.length_filter
+        ch_merge_legth_filter = TRACK_READS.out.length_filter
             .map { [ it[1] ] }
             .collect() 
 
@@ -305,7 +297,7 @@ workflow RIBOSEQ {
             ch_merge_start_dist,
             ch_merge_mapping_counts,
             ch_merge_frame,
-            ch_merge_lemgth_filter
+            ch_merge_legth_filter
         )
 
     }
@@ -375,7 +367,7 @@ workflow RIBOSEQ {
 
     }
 
-    if (!params.skip_psite & !params.skip_qc) {
+    if (!params.skip_psite && !params.skip_qc) {
 
         RUST_QC(
             PREPARE_RIBOSEQ_REFERENCE.out.transcript_info_fa,
