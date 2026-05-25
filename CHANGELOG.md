@@ -93,7 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - The first main release of **riboseq-flow**.
 
-
+[v1.2.2]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.2.2
+[v1.2.1]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.2.1
 [v1.2.0]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.2.0
 [v1.1.1]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.1.1
 [v1.1.0]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.1.0

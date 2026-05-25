@@ -15,7 +15,6 @@ if (!params.input) {
             .fromPath( params.input )
             .splitCsv(header:true)
             .map { row -> [ row.sample, file(row.fastq, checkIfExists: true) ] }
-            // .view()
 }
 
 
@@ -53,7 +52,6 @@ ch_genome_gtf = file(params.gtf, checkIfExists: true)
 /*
 MultiQC config
 */
-// ch_multiqc_config = Channel.fromPath("$projectDir/assets/multiqc_config.yml", checkIfExists: true)
 ch_multiqc_config = Channel.fromPath(params.multiqc_config, checkIfExists: true)
 
 /*
@@ -107,12 +105,6 @@ workflow RIBOSEQ {
         ch_genome_gtf,
         ch_contaminants_fasta
     )
-
-    // Test to asses channel type
-    // def test = PREPARE_RIBOSEQ_REFERENCE.out.genome_gtf
-    //                 .map { it[1] }
-
-    // println "genome_gtf_main class: ${test.getClass()}"
 
     // Extract UMIs and/or trim adapters and filter on min length, then run FASTQC
     PREPROCESS_READS(ch_input)
