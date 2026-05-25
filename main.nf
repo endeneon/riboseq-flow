@@ -47,7 +47,7 @@ if(params.org) {
 
 
 ch_genome_fasta = file(params.fasta, checkIfExists: true)
-ch_contaminants_fasta = file(params.contaminants_fasta, checkIfExists: true)
+ch_contaminants_fasta = params.skip_premap ? Channel.empty() : file(params.contaminants_fasta, checkIfExists: true)
 ch_genome_gtf = file(params.gtf, checkIfExists: true)
 
 /*
