@@ -62,7 +62,7 @@ riboseq-flow is a Nextflow DSL2 pipeline for the analysis and quality control of
 Nextflow installation instructions can be found [here](https://nf-co.re/docs/usage/installation).
 We recommend using Nextflow with `Java 17.0.9` or later.
 
-**Note:** The pipeline has been tested on with `Nextflow` versions `21.10.3`, `22.10.3`, `23.04.2`, `23.10.0`, `24.10.2` and `25.10.0`.
+**Note:** The pipeline has been tested on with `Nextflow` versions `21.10.3`, `22.10.3`, `23.04.2`, `23.10.0`, `24.10.2` and `25.10.0`. Nextflow versions newer than `25.10.0` are not yet officially supported.
 
 2. Pull the desired version of the pipeline from the GitHub repository:
 
