@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
+## [v1.2.3] - 2026-05-25
+### Changed
+- Pinned custom Docker container images to immutable SHA digests for reproducible execution.
+- Updated Singularity pre-download instructions to use digest-pinned container references.
+- Refined README wording for the "Why use riboseq-flow" section.
+
+### Fixed
+- Fixed `--skip_premap` runs so `--contaminants_fasta` is not required or checked when premapping is disabled.
+- Replaced non-idiomatic bitwise `&` with logical `&&` in the `RUST_QC` skip condition.
+
+---
 ## [v1.2.2] - 2026-03-28
 ### Added
 - Added .devcontainer for GitHub Codespaces support.
@@ -93,6 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - The first main release of **riboseq-flow**.
 
+[v1.2.3]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.2.3
 [v1.2.2]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.2.2
 [v1.2.1]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.2.1
 [v1.2.0]: https://github.com/iraiosub/riboseq-flow/releases/tag/v1.2.0
