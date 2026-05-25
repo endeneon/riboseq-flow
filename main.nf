@@ -293,7 +293,7 @@ workflow RIBOSEQ {
             .map { [ it[1] ] }
             .collect() 
 
-        ch_merge_lemgth_filter = TRACK_READS.out.length_filter
+        ch_merge_legth_filter = TRACK_READS.out.length_filter
             .map { [ it[1] ] }
             .collect() 
 
@@ -305,7 +305,7 @@ workflow RIBOSEQ {
             ch_merge_start_dist,
             ch_merge_mapping_counts,
             ch_merge_frame,
-            ch_merge_lemgth_filter
+            ch_merge_legth_filter
         )
 
     }
@@ -375,7 +375,7 @@ workflow RIBOSEQ {
 
     }
 
-    if (!params.skip_psite & !params.skip_qc) {
+    if (!params.skip_psite && !params.skip_qc) {
 
         RUST_QC(
             PREPARE_RIBOSEQ_REFERENCE.out.transcript_info_fa,
