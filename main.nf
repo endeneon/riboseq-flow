@@ -110,7 +110,7 @@ workflow RIBOSEQ {
     PREPROCESS_READS(ch_input)
     FASTQC(PREPROCESS_READS.out.fastq)
 
-    // Run ribocutter on trimmed but not length filtered (for ts_trimming, on trimmed but not rGrGrG-cut or length filtered)
+    // Run ribocutter on trimmed reads only (adapter-trimmed, but not 5' G / poly-A cut or length filtered)
     if (!params.skip_ribocutter) {
         RUN_RIBOCUTTER(
             PREPROCESS_READS.out.trimmed_fastq

@@ -14,12 +14,12 @@ workflow RUN_RIBOCUTTER {
 
     main:
 
-    // All reads (without length filtering or rGrGrG trimmed in case of --ts_trimming)
+    // All reads (adapter-trimmed, but without length filtering or 5' G / poly-A trimming)
     RIBOCUTTER_DEFAULT(
         reads
     )
 
-    // All reads (without length filtering or rGrGrG trimmed in case of --ts_trimming) used as input, but min length 23 for ribocutter
+    // All reads (adapter-trimmed, but without length filtering or 5' G / poly-A trimming) used as input, but min length 23 for ribocutter
     RIBOCUTTER_MIN23(
         reads
     )

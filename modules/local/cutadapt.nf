@@ -43,9 +43,27 @@ process CUTADAPT {
     // Define args for filtering reads based on length
     filter_args = " -j ${task.cpus} --minimum-length ${params.minimum_length} -o ${sample_id}.filtered.fastq.gz"
 
+    // Optional template-switching artefact removal, applied after cut_end and before length filtering.
+    // 5' non-templated G's and 3' poly-A tails are removed in SEPARATE cutadapt passes because cutadapt
+    // only removes the single best-matching adapter per pass, so combining -g and -a in one call can leave
+    // one end untrimmed on reads carrying both artefacts. Each pass rewrites ${sample_id}.cut.fastq.gz so
+    // the length-filter step (and read-fate tracking) keep operating on the canonical filename.
+    n_fiveprime_g = (params.remove_fiveprime_g ?: 0) as int
+    polya_min = (params.polya_min_length ?: 0) as int
+
+    // Remove non-templated 5' G's (anchored ^G{N}); only trims G's actually present at the read start
+    fiveprime_g_cmd = n_fiveprime_g > 0 ? """
+    cutadapt -j ${task.cpus} -e 0 -g "^${'G' * n_fiveprime_g}" -o ${sample_id}.cut_5pg.fastq.gz ${sample_id}.cut.fastq.gz > ${sample_id}.cutadapt_5pg.log
+    mv ${sample_id}.cut_5pg.fastq.gz ${sample_id}.cut.fastq.gz""" : ""
+
+    // Remove 3' poly-A tails of at least polya_min A's
+    polya_cmd = polya_min > 0 ? """
+    cutadapt -j ${task.cpus} -e 0 -q 0 -a "A{${polya_min}};min_overlap=${polya_min}" -o ${sample_id}.cut_polya.fastq.gz ${sample_id}.cut.fastq.gz > ${sample_id}.cutadapt_polya.log
+    mv ${sample_id}.cut_polya.fastq.gz ${sample_id}.cut.fastq.gz""" : ""
+
     """
     cutadapt ${trim_args}${adapter_args} $reads > ${sample_id}.cutadapt_trim.log
-    cutadapt ${cut_args} ${sample_id}.trimmed.fastq.gz > ${sample_id}.cutadapt_cut.log
+    cutadapt ${cut_args} ${sample_id}.trimmed.fastq.gz > ${sample_id}.cutadapt_cut.log${fiveprime_g_cmd}${polya_cmd}
     cutadapt ${filter_args} ${sample_id}.cut.fastq.gz > ${sample_id}.cutadapt_filter.log
     """
 

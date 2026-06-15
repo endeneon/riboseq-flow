@@ -186,6 +186,8 @@ Read trimming steps are executed in the following order: (i) adaptors and low qu
 - `--adapter_fiveprime` sequence of 5' adapter (equivalent to `-g` in `cutadapt`)
 - `--times_trimmed` number of times a read will be adaptor trimmed (default: `1`)
 - `--cut_end` number of nucleotides to be trimmed from 5' or 3' end of reads (equivalent to `-u` in `cutadapt`). Supply positive values for trimming from the 5' end, and negative values for trimming from the 3'end (default `0`, no residues are trimmed). **Important:**: This step is perfomed after adapter trimming, and after UMIs have been moved to the read header. Useful for libraries where non-templated nucleotides are part of the read and need trimming (e.g. template-switching, OTTR libraries).
+- `--remove_fiveprime_g` number of non-templated 5' G's to remove with an anchored adapter (equivalent to `-g "^G{N}"` in `cutadapt`), targeting the template-switching artefact found in some ribo-seq libraries. Only G's actually present at the read start are removed. This step runs after `--cut_end` and before length filtering (default: `3`; set to `0` to disable).
+- `--polya_min_length` minimum length of a 3' poly-A stretch to trim (equivalent to `-a "A{N};min_overlap=N"` in `cutadapt`). Reads with shorter A-runs are left untouched. This step runs after the 5' G removal and before length filtering (default: `6`; set to `0` to disable).
 - `--minimum_quality` cutoff value for trimming low-quality ends from reads (default: `10`)
 - `--minimum_length` minimum read length after trimming (default: `20`)
 
