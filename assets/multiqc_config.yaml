@@ -9,8 +9,9 @@ report_header_info:
   - Contact E-mail: "ira.iosub@crick.ac.uk"
   - Application Type: "Ribo-seq"
 
-exclude_modules:
-    - 'general_stats'
+# General Statistics table left enabled (do not exclude 'general_stats').
+# exclude_modules:
+#     - 'general_stats'
 
 # Other MultiQC config stuff here
 custom_data:
