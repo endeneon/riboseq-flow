@@ -96,7 +96,7 @@ nextflow run iraiosub/riboseq-flow -r v1.2.3 -profile test,docker
 nextflow pull iraiosub/riboseq-flow -r v1.2.3
 ```
 
-3. Create a samplesheet `samplesheet.csv` with information about the samples you would like to analyse before running the pipeline. It has to be a comma-separated file with 2 columns, and a header row as shown in the example below.
+3. Create a samplesheet `samplesheet.csv` with information about the samples you would like to analyse before running the pipeline. It has to be a comma-separated file with 2 required columns (`sample` and `fastq`) plus an optional `group` column (described below), and a header row as shown in the example below.
 
 **Note:** Only single-end read data can be used as input; if you used paired-end sequencing make sure the correct read is used for the analysis.
 
@@ -105,6 +105,15 @@ sample,fastq
 sample1,/path/to/file1.fastq.gz
 sample2,/path/to/file2.fastq.gz
 sample3,/path/to/file3.fastq.gz
+```
+
+Optionally, add a free-text `group` column to colour samples by experimental group in the MultiQC report. Samples sharing a `group` value are given the same colour (assigned automatically from a colourblind-conscious palette); rows with an empty/blank `group` are left un-highlighted, and omitting the column entirely keeps the previous behaviour.
+
+```
+sample,fastq,group
+sample1,/path/to/file1.fastq.gz,WT
+sample2,/path/to/file2.fastq.gz,WT
+sample3,/path/to/file3.fastq.gz,KO
 ```
 
 4. Run the pipeline. The typical command for running the pipeline is as follows (the minimum parameters have been specified):

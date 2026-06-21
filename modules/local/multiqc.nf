@@ -17,6 +17,7 @@ process MULTIQC {
     input:
     path(logs)
     path(multiqc_config)
+    path(group_config)
 
     output:
     path "*multiqc_report.html", emit: report
@@ -25,10 +26,11 @@ process MULTIQC {
 
     script:
 
-    // def config_file = params.multiqc_config ? "--config $params.multiqc_config" : ''
+    // group_config is generated from the samplesheet `group` column and applied on top of
+    // the static multiqc_config (the later --config wins on any overlapping keys).
 
     """
-    multiqc -f $multiqc_config .
+    multiqc -f --config $multiqc_config --config $group_config .
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
