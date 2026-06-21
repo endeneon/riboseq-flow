@@ -115,7 +115,10 @@ plot_metaheatmap <- function(name, df_list, annotation) {
 save_metaprofile_psite_plot <- function(sample_name, plots_ls) {
   
   plot <- plots_ls[[sample_name]]
-  ggplot2::ggsave(paste0(getwd(),"/ribowaltz_qc/", strsplit(sample_name, "plot_")[[1]][2], ".metaprofile_psite.pdf"), plot, dpi = 400, width = 12, height = 6) # save in wide format
+  # sample_name is "plot_X<sample_id>": drop the "plot_" prefix and the leading "X"
+  # added before plotting (see the metaprofile_psite call) so the file matches the sample ID.
+  out_name <- sub("^X", "", strsplit(sample_name, "plot_")[[1]][2])
+  ggplot2::ggsave(paste0(getwd(),"/ribowaltz_qc/", out_name, ".metaprofile_psite.pdf"), plot, dpi = 400, width = 12, height = 6) # save in wide format
 
 }
 
@@ -391,7 +394,17 @@ ggplot2::ggsave(paste0(getwd(), "/ribowaltz_qc/frames.pdf"), frames.gg, dpi = 60
 
 # Trinucleotide periodicity along coding sequences is provided by the function metaprofile_psite. 
 # It generates metaprofiles (the merge of single, transcript-specific profiles) based on P-sites mapping around the start and the stop codon of annotated CDSs.
-metaprofile <- metaprofile_psite(filtered_psite.ls, annotation.dt, sample = names(filtered_psite.ls),
+
+# metaprofile_psite() routes the sample names through ggplot2's label_parsed /
+# rlang::parse_exprs(), which evaluates each name as an R expression. Sample names
+# that start with a digit (e.g. 3433650_Ribo_WT_1) are not valid R symbols and abort
+# with "unexpected input". Prefix the names with "X" (the same convention make.names()
+# uses) so they parse as valid symbols; save_metaprofile_psite_plot() strips the "X"
+# back off so the output PDF filenames still match the original sample IDs.
+metaprofile_psite.ls <- filtered_psite.ls
+names(metaprofile_psite.ls) <- paste0("X", names(filtered_psite.ls))
+
+metaprofile <- metaprofile_psite(metaprofile_psite.ls, annotation.dt, sample = names(metaprofile_psite.ls),
                                          utr5l = 25, cdsl = 40, utr3l = 25,
                                          plot_title = "sample.transcript")
 

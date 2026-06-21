@@ -9,6 +9,14 @@ report_header_info:
   - Contact E-mail: "ira.iosub@crick.ac.uk"
   - Application Type: "Ribo-seq"
 
+# Strip the ".premap" suffix from sample names so the bowtie2 contaminant-premap log
+# (<sample>.premap.log) is parsed under the same sample name as the rest of the data.
+# Without this, MultiQC's General Statistics table shows two rows per sample: one
+# "<sample>" row (FastQC + STAR) and a separate "<sample>.premap" row holding only the
+# bowtie2 overall alignment rate. Cleaning ".premap" merges them into one row per sample.
+extra_fn_clean_exts:
+  - ".premap"
+
 # General Statistics table left enabled (do not exclude 'general_stats').
 # exclude_modules:
 #     - 'general_stats'
@@ -106,14 +114,10 @@ custom_data:
       id: "pcoding_percentage_barplot"
       title: "Reads mapping to protein-coding transcripts"
       ylab: "Percentage (%)"
-      xmax: 100
-      xmin: 0
       cpswitch: False
-      stacking: null
-      tt_percentages: False
       use_legend: False
       tt_suffix: '%'
-      tt_decimals': 1
+      tt_decimals: 1
   expected_length:
     parent_id: riboseq_qc
     parent_name: "Ribo-seq QC"
@@ -126,11 +130,7 @@ custom_data:
       id: "expected_length_barplot"
       title: "Reads of expected length"
       ylab: "Percentage (%)"
-      xmax: 100
-      xmin: 0
       cpswitch: False
-      stacking: null
-      tt_percentages: False
       use_legend: False
       tt_suffix: '%'
   duplication:
@@ -146,11 +146,7 @@ custom_data:
       id: "duplication_barplot"
       title: "Duplication"
       ylab: "Percentage (%)"
-      xmax: 100
-      xmin: 0
       cpswitch: False
-      stacking: null
-      tt_percentages: False
   ribocutter:
     parent_id: ribocutter
     parent_name: "Ribocutter"
@@ -162,10 +158,8 @@ custom_data:
       id: "ribocutter_barplot"
       title: "Ribocutter: reads targeted"
       ylab: "Percentage reads targeted (%)"
-      xmax: 100
-      xmin: 0
       cpswitch: False
-      stacking: null
+      stacking: "group"
       hide_zero_cats: True
   mapping:
     parent_id: mapping
